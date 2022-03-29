@@ -1,7 +1,7 @@
 const { addSecret, getSecrets } = require("./Services/secrets.js")
 const express = require('express')
 const app = express()
-const port = 3002
+const port = process.env.PORT || 3002
 var cors = require('cors')
 var bodyParser = require('body-parser');
 app.use(bodyParser.json()); // support json encoded bodies
