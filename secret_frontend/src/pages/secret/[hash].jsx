@@ -18,7 +18,6 @@ export default function Secret(){
             setDif(Math.floor(parseInt(newDate.getTime() - currentdate.getTime() ) / 1000) * 100);
         }
     }, [expireAt])
-    console.log("dif", dif)
     return (
         <div>
             <Expire delay={dif}>{secretText}</Expire>

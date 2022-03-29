@@ -11,7 +11,6 @@ export default function useGetSecret(hash){
     };
     useEffect(() => {
         axios(options).then(res => {
-            console.log("res", res)
             setExpireAt(res.data.result.expiresAt)
             setSecretText(res.data.result.secretText)
         })

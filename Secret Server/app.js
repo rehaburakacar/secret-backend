@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
+//To prevent from CORS policy errors.
 var corsList = ['http://localhost:3000', 'http://localhost:3001']
 var corsOptions = {
     origin: function (origin, callback) {
@@ -18,41 +19,31 @@ var corsOptions = {
     },
     methods:["get","post"]
 }
+
+//takes parameters from user and post
 app.post('/secret',cors(corsOptions), async (req, res) => {
-    //if (!req.header('id') || !req.header('name')) {
-    //    console.log("HATA!!!!!")
-    //}
-    console.log(req.body)
     const secretText = req.body.secret
-    console.log("SECRET" + secretText)
     const expireafter = parseInt(req.body.expireafter)
     let operation
     await addSecret(secretText, expireafter).then((res) => {
         operation = res
     })
-    console.log("operation" + operation)
     res.sendStatus(operation)
 })
 
-//app.get('/secrets', (req, res) => {
-//    getSecret("4084d3aa012b5a1b8c44fadd0c3c6743")
-//})
-
+//Getting unique secret which was saved before 
 app.get('/secrets/:hash', async (req, res) => {
     let result;
     res.header('Access-Control-Allow-Origin', '*');
     await getSecrets(req.params.hash).then((res) => {
         result = res
     })
-    console.log("RESULT", result)
     if (result == "404") {
-        console.log("BULUNAMADI")
         res.json({
             description: "Secret not found",
             status: 404
         })
     } else {
-        console.log("SUCCEED")
         res.json({
             description: "successfull operation",
             status: 200,
@@ -64,4 +55,3 @@ app.get('/secrets/:hash', async (req, res) => {
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
-//console.log("deneme")

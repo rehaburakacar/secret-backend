@@ -4,7 +4,6 @@ import {useEffect, useState} from "react";
 export default function Expire(props){
     const [visible, setVisible] = useState(true);
     let date = new Date()
-    console.log(date)
 
     useEffect(() => {
         if(props.delay < 0){
