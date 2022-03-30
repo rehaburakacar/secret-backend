@@ -8,7 +8,7 @@ app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 //To prevent from CORS policy errors.
-var corsList = ['http://localhost:3000', 'http://localhost:3001']
+var corsList = ['http://localhost:3000', 'http://localhost:3001', 'https://secret-frontend-updated-enk025p8e-rehaburakacar.vercel.app/']
 var corsOptions = {
     origin: function (origin, callback) {
         if (corsList.indexOf(origin) !== -1) {
