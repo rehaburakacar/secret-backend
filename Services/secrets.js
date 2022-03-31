@@ -14,7 +14,7 @@ async function addSecret(secretText, expireAfter) {
         await client.connect();
         const collection = await client.db("RAPID").collection("SECRETS");
         hash = md5(secretText);
-        await collection.insert({ hash: hash, secretText: secretText, createdAt: createdAt.toLocaleString(), expiresAt: expiresAt.toLocaleString() })
+        await collection.insert({ hash: hash, secretText: secretText, createdAt: createdAt.toLocaleString('en-GB'), expiresAt: expiresAt.toLocaleString('en-GB') })
         return await "200"
     } catch (err) {
         console.log(err)
