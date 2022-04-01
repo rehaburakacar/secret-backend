@@ -1,6 +1,9 @@
 const { addSecret, getSecrets } = require("./Services/secrets.js")
 const express = require('express')
 const app = express()
+require('dotenv').config();
+const URI = process.env.URI
+console.log("URI DEFAULT", URI)
 const port = process.env.PORT || 3002
 var cors = require('cors')
 var bodyParser = require('body-parser');
@@ -25,7 +28,7 @@ app.post('/secret',cors(corsOptions), async (req, res) => {
     const secretText = req.body.secret
     const expireafter = parseInt(req.body.expireafter)
     let operation
-    await addSecret(secretText, expireafter).then((res) => {
+    await addSecret(secretText, expireafter, URI).then((res) => {
         operation = res
     })
     res.sendStatus(operation)
@@ -35,7 +38,7 @@ app.post('/secret',cors(corsOptions), async (req, res) => {
 app.get('/secrets/:hash', async (req, res) => {
     let result;
     res.header('Access-Control-Allow-Origin', '*');
-    await getSecrets(req.params.hash).then((res) => {
+    await getSecrets(req.params.hash, URI).then((res) => {
         result = res
     })
     if (result == "404") {

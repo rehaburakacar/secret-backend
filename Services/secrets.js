@@ -1,9 +1,8 @@
 const { MongoClient, ServerApiVersion } = require('mongodb');
-const { sqlConfig } = require('../Helpers/configurationParameters')
-const client = new MongoClient(sqlConfig.uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 const md5 = require('md5')
 
-async function addSecret(secretText, expireAfter) {
+async function addSecret(secretText, expireAfter, uri) {
+    const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
     let createdAt = new Date(), expiresAt = new Date()
     if (expireAfter != 0) {
         expiresAt.setSeconds(createdAt.getSeconds() + expireAfter);
@@ -24,7 +23,8 @@ async function addSecret(secretText, expireAfter) {
     }
 }
 
-async function getSecrets(hash) {
+async function getSecrets(hash, uri) {
+    const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
     try {
         await client.connect();
         const collection = client.db("RAPID").collection("SECRETS");
